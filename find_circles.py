@@ -2,28 +2,25 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-def find_in_range(image, boundries):
-    for (lower, upper) in boundries:
-        # lower = np.array(lower, dtype = "uint8")
-        # upper = np.array(upper, dtype = "uint8")
-        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+def find_in_range(image, lower, upper):
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    lower = np.array(lower)
+    upper = np.array(upper)
+    mask = cv2.inRange(hsv, lower, upper)
+    output = cv2.bitwise_and(image, image, mask= mask)
 
-        # find the colors within the specified boundaries and apply
-        # the mask
-        # mask = cv2.inRange(image, lower, upper)
-        lower_red = np.array([30,150,50])
-        upper_red = np.array([255,255,180])
-    
-        mask = cv2.inRange(hsv, lower_red, upper_red)
-        output = cv2.bitwise_and(image, image, mask = mask)
-
-        return np.hstack([image, output])
+    return np.hstack([image, output])
 
 boundries = [
-([80, 25, 40], [110, 50, 70]), # red
-([60, 100, 30], [110, 160, 80]), # green
-([20, 50, 130], [50, 90, 165]), # blue
-]
+    ([150, 150, 0], [180, 255, 255]), # red
+    # ([0,0,0], [255,255,255]),
+    # ([0, 25, 0], [0, 255, 0]),
+    # ([50, 5, 20], [140, 110, 110]), # red
+    ([0, 150, 150], [255, 255, 180]), # blue
+    ([65, 60, 60], [80, 250, 250]),
+    ([30, 30, 100], [80, 255, 255])
+    ]
+
 
 
 video = cv2.VideoCapture('video.mp4')
@@ -35,7 +32,7 @@ cv2.resizeWindow('frame', 600, 600)
 while(video.isOpened()):
     ret, frame = video.read()
     # cv2.imshow('bosch',frame)
-    cv2.imshow('bosch', find_in_range(frame, boundries))
+    cv2.imshow('bosch', find_in_range(frame, boundries[2][0], boundries[2][1]))
     # plt.imshow(find_in_range(frame, boundries))
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
