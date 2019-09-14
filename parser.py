@@ -8,13 +8,13 @@ class Parser:
     pause_re = re.compile(r'^PAUSE (\d{1,5})$', re.IGNORECASE)
     base_re = re.compile(r'^BASE$', re.IGNORECASE)
 
-    def parse_file(file_path):
+    def parse_file(self, file_path):
         with open(file_path, 'r') as f:
             commands = f.readlines()
             for command in commands:
                 self.__parse_user_input(command)
 
-    def __parse_user_input(user_input):
+    def __parse_user_input(self, user_input):
         if self.clockwise_re.search(user_input):
                 degrees = int(self.clockwise_re.search(user_input).group(1))
                 print('clockwise {} degrees'.format(degrees))
@@ -23,7 +23,7 @@ class Parser:
             print('counterclockwise {} degrees'.format(degrees))
         elif self.stop_re.search(user_input):
             print('bye')
-            break
+            return
         elif self.speed_re.search(user_input):
             speed = int(self.speed_re.search(user_input).group(1))
             print('set speed {}'.format(speed))
