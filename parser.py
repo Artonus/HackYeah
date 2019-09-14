@@ -7,7 +7,6 @@ class Parser:
     speed_re = re.compile(r'^SPEED (\d{1,2})$', re.IGNORECASE)
     pause_re = re.compile(r'^PAUSE (\d{1,5})$', re.IGNORECASE)
     base_re = re.compile(r'^BASE$', re.IGNORECASE)
-    exit_re = re.compile(r'EXIT', re.IGNORECASE)
 
     def start(self):
         while True:
@@ -19,7 +18,8 @@ class Parser:
                 degrees = int(self.counterclockwise_re.search(user_input).group(1))
                 print('counterclockwise {} degrees'.format(degrees))
             elif self.stop_re.search(user_input):
-                print('stop')
+                print('bye')
+                break
             elif self.speed_re.search(user_input):
                 speed = int(self.speed_re.search(user_input).group(1))
                 print('set speed {}'.format(speed))
@@ -28,9 +28,6 @@ class Parser:
                 print('pause {}'.format(pause))
             elif self.base_re.search(user_input):
                 print('base')
-            elif  self.exit_re.search(user_input):
-                print('bye')
-                break
             else:
                 print('Unknown command')
 if __name__ == '__main__':
