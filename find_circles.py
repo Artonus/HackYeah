@@ -19,7 +19,7 @@ RED_MASK = ([150, 150, 0], [180, 255, 255])
 BLUE_MASK = ([0, 150, 150], [255, 255, 180])
 GREEN_MASK = ([30, 30, 100], [80, 255, 255])
 
-video = cv2.VideoCapture('video.mp4')
+video = cv2.VideoCapture('3.mp4')
 
 cv2.namedWindow("bosch", cv2.WINDOW_NORMAL)
 cv2.resizeWindow('frame', 600, 600)
@@ -35,6 +35,7 @@ def mean1D(array):
         y_sum += y
     return (int(x_sum / count), int(y_sum / count))
 
+
 def or_images(images):
     target = images.pop()
     for i in images:
@@ -42,15 +43,25 @@ def or_images(images):
     return target
 
 
+mask_range = [30, 30, 100, 80, 255, 255]
+
+def event_listener(index):
+    def set_value(val):
+        global mask_range
+        mask_range[index] = val
+    return set_value
+
+for i in range(6):
+    cv2.createTrackbar(str(i), 'bosch', mask_range[i], 255, event_listener(i))
+
 
 while(video.isOpened()):
     ret, frame = video.read()
+    if not ret:
+        video.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
-    red_img = apply_mask(frame, RED_MASK)
-    blue_img = apply_mask(frame, BLUE_MASK)
-    green_img = apply_mask(frame, GREEN_MASK)
-
-    img = or_images([red_img, blue_img, green_img])
+    mask = (mask_range[0:3], mask_range[3:7])
+    img = apply_mask(frame, mask)
 
     cv2.imshow('bosch', img)
 
@@ -65,11 +76,11 @@ while(video.isOpened()):
         thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
 
-    for c in cnts:
-        RED = (0, 0, 255)
-        cv2.circle(frame, mean1D(c), 5, RED, 6)
+    # for c in cnts:
+    #     RED = (0, 0, 255)
+    #     cv2.circle(gray, mean1D(c), 5, RED, 6)
 
-    cv2.imshow('bosch', frame)
+    cv2.imshow('bosch', gray)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
