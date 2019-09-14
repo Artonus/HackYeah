@@ -114,7 +114,10 @@ while(video.isOpened()):
     ROTATING_POINT = mean1D(cnts[0])
     RED = (0, 0, 255)
     cv2.circle(frame, ROTATING_POINT, 5, RED, 6)
-    print(ROTATING_POINT)
+    
+    cv2.line(frame, ROTATING_POINT, TOP, RED, 3)
+    cv2.line(frame, ROTATING_POINT, CENTER, RED, 3)
+    cv2.line(frame, TOP, CENTER, RED, 3)
 
     cv2.imshow('bosch', frame)
 
