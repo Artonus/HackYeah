@@ -37,5 +37,7 @@ class Connection():
         
         pass
     def disconnect(self):
-        self._client.disconnect()
+        if self._client.isconnected():
+            self._client.disconnect()
+            pass        
         pass
