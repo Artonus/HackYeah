@@ -12,8 +12,8 @@ class Parser:
         with open(file_path, 'r') as f:
             commands = f.readlines()
             for command in commands:
-                __parse_user_input(command)
-                
+                self.__parse_user_input(command)
+
     def __parse_user_input(user_input):
         if self.clockwise_re.search(user_input):
                 degrees = int(self.clockwise_re.search(user_input).group(1))
