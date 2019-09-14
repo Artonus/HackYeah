@@ -30,10 +30,6 @@ def what_do(refpoint1, refpoint2, point):
     else:
         isRaising = False
     y = (a * point[0]) + b
-    if point[1] > y and isRaising:
-        return True  # czyli krecimy zgodnie z ruchem wskazówek zegara!
-    else:
-        return False  # czyli że nie
-
+    return point[1] > y and isRaising
 
 print(findAlfaOnThreePoints((400, 300), (400, 0), (100, 300)))

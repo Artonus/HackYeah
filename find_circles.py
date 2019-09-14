@@ -18,7 +18,9 @@ CENTER_MASK = ([79, 109, 97], [143, 210, 191])
 TOP_MASK = ([27, 156, 58], [32, 255, 255])
 SPINNING_MASK = ([142, 181, 0], [255, 255, 255])
 
-video = cv2.VideoCapture('3.mp4')
+source = '3.mp4'
+# source = 'rstp://'
+video = cv2.VideoCapture(source)
 
 cv2.namedWindow("bosch", cv2.WINDOW_NORMAL)
 cv2.resizeWindow('frame', 600, 600)
