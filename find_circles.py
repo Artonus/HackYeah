@@ -18,7 +18,7 @@ CENTER_MASK = ([79, 109, 97], [143, 210, 191])
 TOP_MASK = ([27, 156, 58], [32, 255, 255])
 SPINNING_MASK = ([142, 181, 0], [255, 255, 255])
 
-source = '3.mp4'
+source = './data/3.mp4'
 # source = 'rstp://'
 video = cv2.VideoCapture(source)
 
