@@ -6,9 +6,6 @@ import numpy as np
 def diff(A, B):
     return (A[0] - B[0], A[1] - B[1])
 
-# def findAlfaOnThreePoints(AnchorPoint, pointB, pointC):
-
-
 def findAlfaOnThreePoints(AnchorPoint, pointB, pointC):
     v1 = diff(pointB, AnchorPoint)
     v2 = diff(pointC, AnchorPoint)
@@ -28,5 +25,3 @@ def what_do(refpoint1, refpoint2, point):
     isRaising = a > 0
     y = (a * point[0]) + b
     return point[1] > y and isRaising
-
-print(findAlfaOnThreePoints((400, 300), (400, 0), (100, 300)))

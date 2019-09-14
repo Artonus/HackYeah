@@ -66,8 +66,8 @@ ret, frame = video.read()
 TOP_POINT = read_point(frame, TOP_MASK)[0]
 CENTER_POINT = read_point(frame, CENTER_MASK)[0]
 
-print(TOP_POINT)
-print(CENTER_POINT)
+
+
 
 while(video.isOpened()):
     ret, frame = video.read()
