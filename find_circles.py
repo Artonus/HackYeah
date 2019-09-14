@@ -59,6 +59,7 @@ while(video.isOpened()):
     ret, frame = video.read()
     if not ret:
         video.set(cv2.CAP_PROP_POS_FRAMES, 0)
+        continue
 
     mask = (mask_range[0:3], mask_range[3:7])
     img = apply_mask(frame, mask)
