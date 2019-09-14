@@ -1,6 +1,5 @@
 import cv2
 import imutils
-import statistics
 import numpy as np
 from algorithms import *
 
@@ -21,13 +20,9 @@ SPINNING_MASK = ([142, 181, 0], [255, 255, 255])
 source = './data/3.mp4'
 # source = 'rstp://'
 
-cv2.namedWindow("bosch", cv2.WINDOW_NORMAL)
-cv2.resizeWindow('frame', 600, 600)
-
 
 def mean1D(array):
-    x_sum = 0
-    y_sum = 0
+    x_sum = y_sum = 0
     count = len(array)
     for a in array:
         x, y = a[0]
@@ -60,7 +55,13 @@ def read_point(image, mask):
         points.append(point)
     return points
 
-def run(controller):
+
+def run(controller, display=True):
+
+    if display:
+        cv2.namedWindow("bosch", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('frame', 600, 600)
+
     video = cv2.VideoCapture(source)
     ret, frame = video.read()
     TOP_POINT = read_point(frame, TOP_MASK)[0]
@@ -86,20 +87,22 @@ def run(controller):
         cnts = imutils.grab_contours(cnts)
 
         ROTATING_POINT = mean1D(cnts[0])
-        RED = (0, 0, 255)
-        cv2.circle(frame, ROTATING_POINT, 5, RED, 6)
-
-        cv2.line(frame, ROTATING_POINT, TOP_POINT, RED, 3)
-        cv2.line(frame, ROTATING_POINT, CENTER_POINT, RED, 3)
-        cv2.line(frame, TOP_POINT, CENTER_POINT, RED, 3)
-
         phi = findAlfaOnThreePoints(CENTER_POINT, TOP_POINT, ROTATING_POINT)
         x_offset = int(math.cos(phi) * 100)
         y_offset = int(math.sin(phi) * 100)
-        cv2.circle(frame, (CENTER_POINT[0] + x_offset,
-                        CENTER_POINT[1] + y_offset), 5, (0, 255, 0), 6)
 
-        cv2.imshow('bosch', frame)
+        if display:
+            RED = (0, 0, 255)
+            cv2.circle(frame, ROTATING_POINT, 5, RED, 6)
+
+            cv2.line(frame, ROTATING_POINT, TOP_POINT, RED, 3)
+            cv2.line(frame, ROTATING_POINT, CENTER_POINT, RED, 3)
+            cv2.line(frame, TOP_POINT, CENTER_POINT, RED, 3)
+
+            cv2.circle(frame, (CENTER_POINT[0] + x_offset,
+                               CENTER_POINT[1] + y_offset), 5, (0, 255, 0), 6)
+
+            cv2.imshow('bosch', frame)
 
         controller(phi)
 

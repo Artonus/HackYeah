@@ -4,4 +4,4 @@ def controller(angle):
     #TODO: IMPLEMENT PID
     print(angle)
 
-run(controller)
+run(controller, display=False)
