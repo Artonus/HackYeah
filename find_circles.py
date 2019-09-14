@@ -2,6 +2,7 @@ import cv2
 import imutils
 import statistics
 import numpy as np
+from algorithms import *
 
 
 def apply_mask(image, mask):
@@ -89,6 +90,11 @@ while(video.isOpened()):
     cv2.line(frame, ROTATING_POINT, TOP_POINT, RED, 3)
     cv2.line(frame, ROTATING_POINT, CENTER_POINT, RED, 3)
     cv2.line(frame, TOP_POINT, CENTER_POINT, RED, 3)
+
+    phi =findAlfaOnThreePoints(CENTER_POINT, TOP_POINT, ROTATING_POINT) - math.pi / 2
+    x_offset = int(math.cos(phi) * 100)
+    y_offset = int(math.sin(phi) * 100)
+    cv2.circle(frame, (CENTER_POINT[0] + x_offset, CENTER_POINT[1] + y_offset), 5, (0, 255,0), 6)
 
     cv2.imshow('bosch', frame)
 
