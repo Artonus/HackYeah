@@ -17,6 +17,7 @@ def findAlfaOnThreePoints(pointA, pointB, pointC):
 #     pts2 = np.float32([[300,300],[300,0],[0,300],[300,600]])
 #     return cv2.getPerspectiveTransform(pts1,pts2)
 
+<<<<<<< HEAD
 # def what_do(refpoint1,refpoint2,point):         #refpointy to stałe punkty, point ma być ściśle zmienny
 #     a = ( refpoint2[1] - refpoint1[1] ) / ( refpoint2[0] - refpoint1[0] )
 #     b = refpoint2[1] - ( a * refpoint2[0] )
@@ -28,3 +29,20 @@ def findAlfaOnThreePoints(pointA, pointB, pointC):
 #         return false                            #czyli że nie
 
 print(findAlfaOnThreePoints((300,300),(300,0),(1500,50)))
+=======
+def what_do(refpoint1,refpoint2,point):         #refpointy to stałe punkty, point ma być ściśle zmienny
+    a = ( refpoint2[1] - refpoint1[1] ) / ( refpoint2[0] - refpoint1[0] )
+    b = refpoint2[1] - ( a * refpoint2[0] )
+    if a>0:
+        isRaising = True
+        pass
+    else:
+        isRaising = False
+    y = ( a * point[0] ) + b
+    if point[1] > y:
+        return True                             #czyli krecimy zgodnie z ruchem wskazówek zegara!
+    else:
+        return False                            #czyli że nie
+
+# print(findAlfaOnThreePoints((400,300),(400,0),(100,300)))
+>>>>>>> 07ed7b41c41a8ba000977ad8d27b9ad2b2d2921a
