@@ -16,7 +16,7 @@ source venc/bin/activate
 1. Instalujesz python3 ze stronki (zaznaczasz, żeby dodać do PATH)
 ```bash
 python -m venv venv
-source venv/bin/activate
+venv/Scripts/activate
 ```
 
 ## Instalacja requirements
