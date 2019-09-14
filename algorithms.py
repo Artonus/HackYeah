@@ -21,11 +21,15 @@ def findAlfaOnThreePoints(pointA, pointB, pointC):
 def what_do(refpoint1,refpoint2,point):         #refpointy to stałe punkty, point ma być ściśle zmienny
     a = ( refpoint2[1] - refpoint1[1] ) / ( refpoint2[0] - refpoint1[0] )
     b = refpoint2[1] - ( a * refpoint2[0] )
-    isRaising = a > 0 ? true : false
+    if a>0:
+        isRaising = True
+        pass
+    else:
+        isRaising = False
     y = ( a * point[0] ) + b
     if point[1] > y:
-        return true                             #czyli krecimy zgodnie z ruchem wskazówek zegara!
-    else
-        return false                            #czyli że nie
+        return True                             #czyli krecimy zgodnie z ruchem wskazówek zegara!
+    else:
+        return False                            #czyli że nie
 
 # print(findAlfaOnThreePoints((400,300),(400,0),(100,300)))
