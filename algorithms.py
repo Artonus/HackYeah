@@ -25,10 +25,7 @@ def findAlfaOnThreePoints(AnchorPoint, pointB, pointC):
 def what_do(refpoint1, refpoint2, point):
     a = (refpoint2[1] - refpoint1[1]) / (refpoint2[0] - refpoint1[0])
     b = refpoint2[1] - (a * refpoint2[0])
-    if a > 0:
-        isRaising = True
-    else:
-        isRaising = False
+    isRaising = a > 0
     y = (a * point[0]) + b
     return point[1] > y and isRaising
 
