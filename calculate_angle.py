@@ -9,8 +9,7 @@ def calculate_angle(p1x, p1y, p2x, p2y, p3x, p3y):
     angle_rad = math.atan(ratio)
     angle_deg = (angle_rad * 180) / math.pi;
 
-    if(angle_deg < 0){
+    if(angle_deg < 0):
         angle_deg = 180 + angle_deg
-    }
 
     return angle_deg
