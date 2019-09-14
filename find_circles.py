@@ -15,7 +15,7 @@ def apply_mask(image, mask):
 
 CENTER_MASK = ([79, 109, 97], [143, 210, 191])
 TOP_MASK = ([27, 156, 58], [32, 255, 255])
-SPINNING_MASK = ([142, 181, 0], [255, 255, 255])
+ROTATING_MASK = ([142, 181, 0], [255, 255, 255])
 
 source = './data/3.mp4'
 # source = 'rstp://'
@@ -55,7 +55,6 @@ def read_point(image, mask):
         points.append(point)
     return points
 
-
 def run(controller, display=True):
 
     if display:
@@ -73,7 +72,7 @@ def run(controller, display=True):
             video.set(cv2.CAP_PROP_POS_FRAMES, 0)
             continue
 
-        img = apply_mask(frame, SPINNING_MASK)
+        img = apply_mask(frame, ROTATING_MASK)
 
         gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         gray = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -88,10 +87,10 @@ def run(controller, display=True):
 
         ROTATING_POINT = mean1D(cnts[0])
         phi = findAlfaOnThreePoints(CENTER_POINT, TOP_POINT, ROTATING_POINT)
-        x_offset = int(math.cos(phi) * 100)
-        y_offset = int(math.sin(phi) * 100)
 
         if display:
+            x_offset = int(math.cos(phi) * 100)
+            y_offset = int(math.sin(phi) * 100)
             RED = (0, 0, 255)
             cv2.circle(frame, ROTATING_POINT, 5, RED, 6)
 
