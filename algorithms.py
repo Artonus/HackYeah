@@ -25,3 +25,18 @@ def what_do(refpoint1, refpoint2, point):
     isRaising = a > 0
     y = (a * point[0]) + b
     return point[1] > y and isRaising
+
+
+#dodanie wartosci do obliczania predkosci
+def add(prev,a):
+    if len(prev) > 9:
+        prev.pop()
+    prev.insert(0,a)
+
+
+#obliczanie szacunkowej wartosci
+def calc_speed(prev):
+    for x in range(1,len(prev)):
+        v = ( prev[x] - prev[x-1] ) * 60            #delta kata * 60FPS
+        v_total += v
+    return v_total / len(prev)

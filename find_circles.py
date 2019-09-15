@@ -68,6 +68,8 @@ def run(controller, display=True):
     TOP_POINT = read_point(frame, TOP_MASK, frame.shape)
     CENTER_POINT = read_point(frame, CENTER_MASK, frame.shape)
 
+    prev_angs = []                                       #lista do obliczania na biezaco predkosci obrotu z obrazu
+
     while(video.isOpened()):
         ret, frame = video.read()
         if not ret:
@@ -109,7 +111,9 @@ def run(controller, display=True):
                                CENTER_POINT[1] + y_offset), 5, (0, 255, 0), 6)
             cv2.imshow('bosch', frame)
 
-        controller(phi)
+        add(prev_angs,phi)
+        v = calc_speed(prev_angs)
+        controller(phi,v)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
