@@ -14,10 +14,6 @@ def apply_mask(image, mask):
     return cv2.bitwise_and(image, image, mask=mask)
 
 
-CENTER_MASK = ([79, 109, 97], [143, 210, 191])
-TOP_MASK = ([27, 156, 58], [32, 255, 255])
-ROTATING_MASK = ([142, 181, 0], [255, 255, 255])
-
 
 def mean1D(array):
     x_sum = y_sum = 0
@@ -35,8 +31,14 @@ def or_images(images):
         target = cv2.bitwise_or(target, i)
     return target
 
+def distance_from_x(a):
+    def dist(b):
+        x = a[0] - b[0]
+        y = a[1] - b[1]
+        return x * x + y * y
+    return dist
 
-def read_point(image, mask):
+def read_point(image, mask, img_center):
     image = apply_mask(image, mask)
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     gray = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -51,7 +53,8 @@ def read_point(image, mask):
     for c in cnts:
         point = mean1D(c)
         points.append(point)
-    return points
+    return min(points, key=distance_from_x(img_center))
+    # return points
 
 def run(controller, display=True):
 
@@ -61,8 +64,9 @@ def run(controller, display=True):
 
     video = cv2.VideoCapture(source)
     ret, frame = video.read()
-    TOP_POINT = read_point(frame, TOP_MASK)[0]
-    CENTER_POINT = read_point(frame, CENTER_MASK)[0]
+
+    TOP_POINT = read_point(frame, TOP_MASK, frame.shape)
+    CENTER_POINT = read_point(frame, CENTER_MASK, frame.shape)
 
     while(video.isOpened()):
         ret, frame = video.read()
@@ -83,7 +87,13 @@ def run(controller, display=True):
             thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         cnts = imutils.grab_contours(cnts)
 
-        ROTATING_POINT = mean1D(cnts[0])
+        points = []
+        for c in cnts:
+            point = mean1D(c)
+            cv2.circle(frame, point, 5, (255,0,0), 6)
+            points.append(point)
+
+        ROTATING_POINT = min(points, key=distance_from_x(CENTER_POINT))
         phi = findAlfaOnThreePoints(CENTER_POINT, TOP_POINT, ROTATING_POINT)
 
         if display:
@@ -98,7 +108,6 @@ def run(controller, display=True):
 
             cv2.circle(frame, (CENTER_POINT[0] + x_offset,
                                CENTER_POINT[1] + y_offset), 5, (0, 255, 0), 6)
-
             cv2.imshow('bosch', frame)
 
         controller(phi)

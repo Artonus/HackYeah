@@ -30,6 +30,8 @@ def event_listener(index):
 for i in range(6):
     cv2.createTrackbar(str(i), 'bosch', mask_range[i], 255, event_listener(i))
 
+names = ["TOP_MASK", "CENTER_MASK", "ROTATING_MASK"]
+i = 0
 while(video.isOpened()):
     ret, frame = video.read()
     if not ret:
@@ -41,6 +43,6 @@ while(video.isOpened()):
 
     cv2.imshow('bosch', img)
 
-
     if cv2.waitKey(1) & 0xFF == ord('p'):
-        print(mask)
+        print(names[i] + " =", mask)
+        i = (i + 1) % 3
