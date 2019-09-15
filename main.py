@@ -1,7 +1,7 @@
 from find_circles import run
+import numpy as np
 
-def controller(angle):
-    #TODO: IMPLEMENT PID
-    print(angle)
+def controller(val):
+    print(val)
 
-run(controller, display=False)
+run(controller, display=True)

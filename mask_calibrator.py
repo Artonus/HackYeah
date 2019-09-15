@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from config import *
 
 def apply_mask(image, mask):
     lower, upper = mask
@@ -8,8 +9,6 @@ def apply_mask(image, mask):
     upper = np.array(upper)
     return cv2.bitwise_and(image, image, mask=cv2.inRange(hsv, lower, upper))
 
-source = './data/3.mp4'
-# source = ''
 video = cv2.VideoCapture(source)
 
 cv2.namedWindow("bosch", cv2.WINDOW_NORMAL)

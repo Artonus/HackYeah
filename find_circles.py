@@ -2,6 +2,7 @@ import cv2
 import imutils
 import numpy as np
 from algorithms import *
+from config import *
 
 
 def apply_mask(image, mask):
@@ -16,9 +17,6 @@ def apply_mask(image, mask):
 CENTER_MASK = ([79, 109, 97], [143, 210, 191])
 TOP_MASK = ([27, 156, 58], [32, 255, 255])
 ROTATING_MASK = ([142, 181, 0], [255, 255, 255])
-
-source = './data/3.mp4'
-# source = 'rstp://'
 
 
 def mean1D(array):
