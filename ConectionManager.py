@@ -44,7 +44,7 @@ class Connection():
 
     def __init__(self):
         try:
-            broker_address="mqtt.eclipse.org" #"192.168.0.1"
+            broker_address="192.168.0.1"#"mqtt.eclipse.org" #"192.168.0.1"
             port = 1883            
             self._client.on_connect = self.on_connectEvent
             self._client.on_message = self.on_messageEvent

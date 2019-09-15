@@ -17,8 +17,8 @@ CENTER_MASK = ([79, 109, 97], [143, 210, 191])
 TOP_MASK = ([27, 156, 58], [32, 255, 255])
 SPINNING_MASK = ([142, 181, 0], [255, 255, 255])
 
-source = './data/3.mp4'
-# source = 'rstp://'
+# source = './data/3.mp4'
+source = 'rtsp://hackathon:!Hackath0n@192.168.0.2'
 
 
 def mean1D(array):
