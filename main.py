@@ -27,17 +27,23 @@ pid = PID(0.1, 0, 0, setpoint=target)
     # else 
     #     connection.sendCommand("stop", 0)
 
-# def pwm(period, value, rotation):
-#     if rotation == "clkWise":
-#         connection.sendCommand("right",1)
-#     else:
-#         connection.sendCommand("left",1)
+def pwm(period, value, rotation):
+    if rotation == "clkWise":
+        connection.sendCommand("move", "rigth")
+        connection.sendCommand("freq", "1")
+        connection.disconnect()
+    else:
+        connection.sendCommand("move", "left")
+        connection.sendCommand("freq", "1")
+        connection.disconnect()
 
-#     sleep(period*value)
-#     connection.sendCommand("stop", 0)
-#     sleep(period - period*value)   
+    sleep(period*value)
+    connection.sendCommand("move", "stop")
+    sleep(period - period*value)   
 
-# while True:
-#     pwm(0.5,0.07,"clWise")
+while True:
+    pwm(1,0.07,"clWise")
 # run(controller, display=True)
-connection.sendCommand("right", 10)
+# connection.sendCommand("move", "left")
+# connection.sendCommand("freq", "15")
+# connection.disconnect()
