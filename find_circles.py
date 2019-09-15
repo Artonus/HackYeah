@@ -90,7 +90,6 @@ def run(controller, display=True):
         points = []
         for c in cnts:
             point = mean1D(c)
-            cv2.circle(frame, point, 5, (255,0,0), 6)
             points.append(point)
 
         ROTATING_POINT = min(points, key=distance_from_x(CENTER_POINT))
